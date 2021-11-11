@@ -7,13 +7,20 @@ import ccloud_lib
 
 
 def create_topics(params_conf, topic1, topic2):
+    """
+    Create the topics/ queues that will have the messages.
+
+    :param params_conf: Parameters of the config file
+    :param topic1: Name of the first topic
+    :param topic2: Name of the second topic
+    :return:
+    """
     ccloud_lib.create_topic(params_conf, topic1)
     ccloud_lib.create_topic(params_conf, topic2)
 
 
 def parse_args():
     """Parse command line arguments"""
-
     parser = argparse.ArgumentParser(
              description="Confluent Python Client example to produce messages \
                   to Confluent Cloud")
@@ -21,7 +28,7 @@ def parse_args():
     required = parser.add_argument_group('required arguments')
     required.add_argument('-f',
                           dest="config_file",
-                          help="path to Confluent Cloud configuration file",
+                          help="path to the configuration file",
                           required=True)
     required.add_argument('-t1',
                           dest="topic1",
@@ -41,6 +48,7 @@ def parse_args():
 
 
 def read_config(config_file, cloud_name):
+    """Reads the config file"""
     if cloud_name == "kafka":
         conf = ccloud_lib.read_ccloud_config(config_file)
         # 'auto.offset.reset=earliest' to start reading from the beginning of the

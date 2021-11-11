@@ -73,3 +73,17 @@ Google Cloud:
   "client_x509_cert_url": X
 }
 ```
+
+## Train the CNN Model
+```python
+from cnn_minst import CNNFashion
+
+cf = CNNFashion()
+# If no data given by the user
+cf.fit()
+# If data given by the user
+cf.fit(trainX, trainY)
+```
+If the data is given by user,
+- trainX must be a numpy.ndarray, with shape (X, 28, 28)
+- trainY must be a numpy.ndarray, with shape (X)

@@ -2,8 +2,6 @@ import json
 import hashlib
 import time
 
-from confluent_kafka import Producer
-from confluent_kafka import Consumer
 from keras.datasets import fashion_mnist
 import numpy as np
 
