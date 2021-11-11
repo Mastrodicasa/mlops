@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mnist_fashion"
+version = "0.1.0"
+description = "Productionalise a CNN model predicting the MNIST fashion classes."
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+tensorflow = "^2.7"
+keras = "^2.7"
+confluent-kafka = "^1.7.0"
+certifi = "^2021.10.8"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
