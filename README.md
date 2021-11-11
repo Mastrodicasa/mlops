@@ -47,3 +47,29 @@ Every set period of time, the requestor produces a package of 5 images is sent w
 The replier polls the requests queue, and when a message arrives, the replier predicts the classes, and puts the prediction in the replies queue.
 
 The requestor polls the replies queue and when a message arrives, it prints it.
+
+## Config files fields
+Kafka:
+```python
+bootstrap.servers= X
+security.protocol=SASL_SSL 
+sasl.mechanisms=PLAIN 
+sasl.username=X
+sasl.password=X
+```
+
+Google Cloud:
+```python
+{
+  "type": "service_account",
+  "project_id": X,
+  "private_key_id": X,
+  "private_key": X,
+  "client_email": X,
+  "client_id": X,
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": X
+}
+```
