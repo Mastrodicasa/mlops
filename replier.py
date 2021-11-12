@@ -49,16 +49,16 @@ if __name__ == '__main__':
                 header = data['header']
                 value = data['value']
                 value = np.array(value)
+                print("In replier, consumed record with hash {}".format(header))
 
                 # Predict the classes
                 predictions = cf.predict(value)
-                print("Consumed record with key {}, prediction {}"
-                      .format(record_key, predictions.tolist()))
+                print("Prediction made")
 
                 # Create the message: predictions and the hash
                 record_key = "rep"
                 record_value = json.dumps({"header": header, "predictions": predictions.tolist()})
-                print("Producing record: {}\t{}".format(record_key, record_value))
+                print("Predictions sent for message with hash: {}".format(header))
 
                 # Publish the message on the second topic
                 api.produce(producer, topic2, record_key, record_value, api.acked, cloud_name)

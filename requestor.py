@@ -10,7 +10,7 @@ import api
 
 if __name__ == '__main__':
 
-    # Read arguments and configurations and initialize
+    # Read arguments and configuration file
     args = api.parse_args()
     print(args)
     config_file = args.config_file
@@ -29,12 +29,13 @@ if __name__ == '__main__':
     (train_x, train_y), (test_x, test_y) = fashion_mnist.load_data()
     test_x = test_x.reshape((test_x.shape[0], 28, 28, 1))
 
-    #########################
-    test_x = test_x[0:50, :, :, :]
-    ###########################
+    # If you want to have a smaller dataset
+    test_x = test_x[0:100, :, :, :]
 
+    # Create a hash to be able to distinguish
     hash_dict = {}
     hash = hashlib.sha1()
+    # step is the number of images in each message
     step = 5
     for i in range(0, len(test_x) - step, step):
         hash.update(str(time.time()).encode('utf-8'))
@@ -44,12 +45,12 @@ if __name__ == '__main__':
 
         record_key = "req"
         record_value = json.dumps({"header": header, "value": value})
-        print("Producing record: {}\t{}".format(record_key, record_value))
+        print("Producing record: {}\t{}".format(record_key, header))
         api.produce(producer, topic1, record_key, record_value, api.acked, cloud_name)
         # p.poll() serves delivery reports (on_delivery)
         # from previous produce() calls.
         producer.poll(0)
-        time.sleep(5)
+        time.sleep(2)
 
     producer.flush()
 
@@ -79,8 +80,7 @@ if __name__ == '__main__':
                 predictions = data['predictions']
                 predictions = np.array(predictions)
 
-                print("Consumed record with key {}, prediction {}"
-                      .format(record_key, predictions))
+                print("Consumed record with key {}, prediction {}".format(record_key, predictions))
 
     except KeyboardInterrupt:
         pass

@@ -13,7 +13,6 @@ def create_topics(params_conf, topic1, topic2):
     :param params_conf: Parameters of the config file
     :param topic1: Name of the first topic
     :param topic2: Name of the second topic
-    :return:
     """
     ccloud_lib.create_topic(params_conf, topic1)
     ccloud_lib.create_topic(params_conf, topic2)
@@ -22,8 +21,7 @@ def create_topics(params_conf, topic1, topic2):
 def parse_args():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-             description="Confluent Python Client example to produce messages \
-                  to Confluent Cloud")
+             description="Example with a requestor and a replier")
     parser._action_groups.pop()
     required = parser.add_argument_group('required arguments')
     required.add_argument('-f',
@@ -48,7 +46,13 @@ def parse_args():
 
 
 def read_config(config_file, cloud_name):
-    """Reads the config file"""
+    """
+    Reads the config file (for kafka or gc)
+
+    :param config_file: Config file
+    :param cloud_name: Either kafka or gc
+    :return all the params from the configuration file
+    """
     if cloud_name == "kafka":
         conf = ccloud_lib.read_ccloud_config(config_file)
         # 'auto.offset.reset=earliest' to start reading from the beginning of the
@@ -58,9 +62,7 @@ def read_config(config_file, cloud_name):
         params_conf = None
     return params_conf
 
-# Optional per-message on_delivery handler (triggered by poll() or flush())
-# when a message has been successfully delivered or
-# permanently failed delivery (after retries).
+
 def acked(err, msg):
     """Delivery report handler called on
     successful or failed delivery of message

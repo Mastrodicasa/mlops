@@ -110,6 +110,7 @@ class CNNFashion:
             else:
                 pass
 
+            # reshape train_x and train_y
             train_x, train_y = self.__reshape_dataset(train_x, train_y)
             self.__check_input(train_x, train_y)
 
@@ -120,6 +121,7 @@ class CNNFashion:
             model = self.define_model()
             # fit model
             model.fit(train_x, train_y, epochs=10, batch_size=32, verbose=0)
+            # save model
             self.model = model
         except Exception as e:
             logger.error(e, exc_info=True)
@@ -130,9 +132,10 @@ class CNNFashion:
             # Check if the model was trained
             self.__check_is_fitted()
 
+            # reshape train_x and train_y
             test_x, test_y = self.__reshape_dataset(test_x, test_y)
             self.__check_input(test_x, test_y)
-            test_y = to_categorical(test_y)
+
             # prepare pixel data
             test_x = self.prep_pixels(test_x)
             _, acc = self.model.evaluate(test_x, test_y, verbose=0)
@@ -144,6 +147,7 @@ class CNNFashion:
     def predict(self, test_x):
         try:
             self.__check_is_fitted()
+            # reshape test_x
             test_x = test_x.reshape((test_x.shape[0], 28, 28, 1))
             # prepare pixel data
             test_x = self.prep_pixels(test_x)
@@ -153,32 +157,32 @@ class CNNFashion:
             logger.error(e, exc_info=True)
             return {"result": "failed", "message": str(e)}
 
-
-(trainX, trainY), (testX, testY) = fashion_mnist.load_data()
-
-print(trainX.shape)
-print(type(trainX))
-print(type(trainY))
-print(trainY.shape)
-print(testX.shape)
-print(testY.shape)
-cf = CNNFashion()
-cf.fit()
-_, acc = cf.evaluate(testX, testY)
-print(_)
-print(acc)
-#print('> %.3f' % (acc * 100.0))
-print(cf.predict(testX))
-
-print("Second")
-cf.fit(trainX, trainY)
-_, acc = cf.evaluate(testX, testY)
-print(_)
-print(acc)
-#print('> %.3f' % (acc * 100.0))
-print(cf.predict(testX))
-
-
+#
+# (trainX, trainY), (testX, testY) = fashion_mnist.load_data()
+#
+# print(trainX.shape)
+# print(type(trainX))
+# print(type(trainY))
+# print(trainY.shape)
+# print(testX.shape)
+# print(testY.shape)
+# cf = CNNFashion()
+# cf.fit()
+# _, acc = cf.evaluate(testX, testY)
+# print(_)
+# print(acc)
+# #print('> %.3f' % (acc * 100.0))
+# print(cf.predict(testX))
+#
+# print("Second")
+# cf.fit(trainX, trainY)
+# _, acc = cf.evaluate(testX, testY)
+# print(_)
+# print(acc)
+# #print('> %.3f' % (acc * 100.0))
+# print(cf.predict(testX))
+#
+#
 
 
 
